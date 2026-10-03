@@ -1,0 +1,11 @@
+{
+  "name": "meal-prepper",
+  "private": true,
+  "type": "commonjs",
+  "scripts": {
+    "test": "node --test",
+    "gemma": "node ollamaGemma.js",
+    "recipe": "node recipeGenerator.js",
+    "meal": "node recipeGenerator.js"
+  }
+}

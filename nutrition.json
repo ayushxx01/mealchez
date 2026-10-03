@@ -1,0 +1,226 @@
+{
+  "schemaVersion": 1,
+  "sourceDatabase": {
+    "name": "Indian Food Composition Tables 2017",
+    "publisher": "ICMR-National Institute of Nutrition",
+    "url": "https://www.nin.res.in/ebooks/IFCT2017.pdf",
+    "basis": "IFCT composition table values per 100 g edible portion; reported means are used.",
+    "energyConversion": "kcal = IFCT energy in kJ / 4.184",
+    "carbohydrateDefinition": "IFCT available carbohydrate"
+  },
+  "nutrientUnits": {
+    "calories_kcal": "kcal",
+    "protein_g": "g",
+    "carbohydrates_g": "g",
+    "fat_g": "g"
+  },
+  "foods": [
+    {
+      "id": "rice-white-milled-raw",
+      "name": "Rice, raw, milled",
+      "aliases": ["rice", "white rice", "raw rice"],
+      "state": "raw, milled",
+      "per100g": {
+        "calories_kcal": 356.4,
+        "protein_g": 7.94,
+        "carbohydrates_g": 78.24,
+        "fat_g": 0.56
+      },
+      "source": { "foodCode": "A015", "energy_kj_per100g": 1491 }
+    },
+    {
+      "id": "wheat-flour-atta",
+      "name": "Wheat flour, atta",
+      "aliases": ["atta", "whole wheat flour", "wheat flour"],
+      "state": "dry, uncooked flour",
+      "per100g": {
+        "calories_kcal": 320.3,
+        "protein_g": 10.57,
+        "carbohydrates_g": 64.17,
+        "fat_g": 1.53
+      },
+      "source": { "foodCode": "A019", "energy_kj_per100g": 1340 }
+    },
+    {
+      "id": "egg-whole-raw",
+      "name": "Egg, poultry, whole",
+      "aliases": ["egg", "eggs", "whole egg"],
+      "state": "raw",
+      "per100g": {
+        "calories_kcal": 134.8,
+        "protein_g": 13.28,
+        "carbohydrates_g": null,
+        "fat_g": 9.15
+      },
+      "source": { "foodCode": "M001", "energy_kj_per100g": 564 }
+    },
+    {
+      "id": "egg-whole-boiled",
+      "name": "Egg, poultry, whole",
+      "aliases": ["egg", "eggs", "boiled egg", "hard-boiled egg"],
+      "state": "boiled",
+      "per100g": {
+        "calories_kcal": 147.7,
+        "protein_g": 13.43,
+        "carbohydrates_g": null,
+        "fat_g": 10.54
+      },
+      "source": { "foodCode": "M004", "energy_kj_per100g": 618 }
+    },
+    {
+      "id": "paneer",
+      "name": "Paneer",
+      "aliases": ["paneer", "cottage cheese"],
+      "state": "as listed; preparation state not further specified by IFCT",
+      "per100g": {
+        "calories_kcal": 257.9,
+        "protein_g": 18.86,
+        "carbohydrates_g": 12.41,
+        "fat_g": 14.78
+      },
+      "source": { "foodCode": "L003", "energy_kj_per100g": 1079 }
+    },
+    {
+      "id": "milk-cow-whole",
+      "name": "Milk, whole, cow",
+      "aliases": ["milk", "cow milk", "whole milk"],
+      "state": "whole milk, as listed; heat treatment not specified by IFCT",
+      "per100g": {
+        "calories_kcal": 72.9,
+        "protein_g": 3.26,
+        "carbohydrates_g": 4.94,
+        "fat_g": 4.48
+      },
+      "source": { "foodCode": "L002", "energy_kj_per100g": 305 }
+    },
+    {
+      "id": "chicken-breast-skinless-raw",
+      "name": "Chicken, poultry, breast, skinless",
+      "aliases": ["chicken", "chicken breast", "skinless chicken"],
+      "state": "raw, skinless breast",
+      "per100g": {
+        "calories_kcal": 168.3,
+        "protein_g": 21.81,
+        "carbohydrates_g": null,
+        "fat_g": 9.00
+      },
+      "source": { "foodCode": "N003", "energy_kj_per100g": 704 }
+    },
+    {
+      "id": "lentil-dal-dry",
+      "name": "Lentil dal",
+      "aliases": ["dal", "lentils", "masoor dal"],
+      "state": "dry, uncooked lentil dal",
+      "per100g": {
+        "calories_kcal": 322.4,
+        "protein_g": 24.35,
+        "carbohydrates_g": 52.53,
+        "fat_g": 0.75
+      },
+      "source": { "foodCode": "B013", "energy_kj_per100g": 1349 }
+    },
+    {
+      "id": "bengal-gram-whole-dry",
+      "name": "Bengal gram, whole",
+      "aliases": ["chickpeas", "chana", "chole", "whole Bengal gram"],
+      "state": "dry, uncooked whole gram",
+      "per100g": {
+        "calories_kcal": 287.0,
+        "protein_g": 18.77,
+        "carbohydrates_g": 39.56,
+        "fat_g": 5.11
+      },
+      "source": { "foodCode": "B002", "energy_kj_per100g": 1201 }
+    },
+    {
+      "id": "potato-brown-skin-raw",
+      "name": "Potato, brown skin, big",
+      "aliases": ["potato", "aloo"],
+      "state": "raw, with brown skin",
+      "per100g": {
+        "calories_kcal": 69.8,
+        "protein_g": 1.54,
+        "carbohydrates_g": 14.89,
+        "fat_g": 0.23
+      },
+      "source": { "foodCode": "F006", "energy_kj_per100g": 292 }
+    },
+    {
+      "id": "onion-big-raw",
+      "name": "Onion, big",
+      "aliases": ["onion", "onions", "pyaz"],
+      "state": "raw",
+      "per100g": {
+        "calories_kcal": 48.0,
+        "protein_g": 1.50,
+        "carbohydrates_g": 9.56,
+        "fat_g": 0.24
+      },
+      "source": { "foodCode": "G017", "energy_kj_per100g": 201 }
+    },
+    {
+      "id": "tomato-ripe-local-raw",
+      "name": "Tomato, ripe, local",
+      "aliases": ["tomato", "tomatoes", "tamatar"],
+      "state": "raw, ripe",
+      "per100g": {
+        "calories_kcal": 19.6,
+        "protein_g": 0.90,
+        "carbohydrates_g": 2.71,
+        "fat_g": 0.47
+      },
+      "source": { "foodCode": "D076", "energy_kj_per100g": 82 }
+    },
+    {
+      "id": "banana-ripe-robusta-raw",
+      "name": "Banana, ripe, robusta",
+      "aliases": ["banana", "bananas", "kela"],
+      "state": "raw, ripe",
+      "per100g": {
+        "calories_kcal": 105.2,
+        "protein_g": 1.23,
+        "carbohydrates_g": 23.63,
+        "fat_g": 0.33
+      },
+      "source": { "foodCode": "E012", "energy_kj_per100g": 440 }
+    },
+    {
+      "id": "groundnut",
+      "name": "Ground nut",
+      "aliases": ["peanuts", "peanut", "groundnuts"],
+      "state": "as listed; preparation state not further specified by IFCT",
+      "per100g": {
+        "calories_kcal": 519.6,
+        "protein_g": 23.65,
+        "carbohydrates_g": 17.27,
+        "fat_g": 39.63
+      },
+      "source": { "foodCode": "H012", "energy_kj_per100g": 2176 }
+    }
+  ],
+  "notAvailableInSource": [
+    {
+      "name": "Curd",
+      "reason": "No direct curd entry was found in the IFCT 2017 proximate composition table."
+    },
+    {
+      "name": "Soy chunks",
+      "reason": "No direct textured-soy or soy-chunks entry was found in the IFCT 2017 proximate composition table."
+    },
+    {
+      "name": "Oats",
+      "reason": "No direct oats entry was found in the IFCT 2017 proximate composition table."
+    },
+    {
+      "name": "Bread",
+      "reason": "No direct bread entry was found in the IFCT 2017 proximate composition table."
+    }
+  ],
+  "dataNotes": [
+    "All per100g values refer to 100 g edible portion, following IFCT 2017.",
+    "Calories are converted from the IFCT energy mean in kJ using 1 kcal = 4.184 kJ.",
+    "IFCT carbohydrate values are available carbohydrate, not total carbohydrate.",
+    "A null nutrient means IFCT did not report a value; it must not be interpreted as zero.",
+    "Raw, boiled, and dry entries are separate foods when IFCT provides separate states."
+  ]
+}
