@@ -1,9 +1,11 @@
 const { generateRecipe } = require("./recipeGenerator");
 const { calculateNutrition } = require("./nutritionCalculator");
+const { convertRecipeIngredientsToGrams } = require("./unitConverter");
 
-/** Returns a recipe-plus-nutrition value, or throws if deterministic calculation rejects the recipe. */
+/** Returns a recipe-plus-nutrition value, or throws on unsupported conversion or calculator errors. */
 function attachNutrition(recipe) {
-  const nutrition = calculateNutrition(recipe.ingredients);
+  const calculatorIngredients = convertRecipeIngredientsToGrams(recipe.ingredients);
+  const nutrition = calculateNutrition(calculatorIngredients);
   if (!nutrition.ok) {
     throw new Error(`Recipe ingredients cannot be calculated: ${JSON.stringify(nutrition.errors)}`);
   }

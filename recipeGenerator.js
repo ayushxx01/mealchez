@@ -1,5 +1,7 @@
 const nutritionData = require("./nutrition.json");
 const { calculateNutrition } = require("./nutritionCalculator");
+const { convertRecipeIngredientsToGrams } = require("./unitConverter");
+const { supportedUnits } = require("./unitConversions.json");
 
 const OLLAMA_GENERATE_URL = "http://127.0.0.1:11434/api/generate";
 const MODEL = "gemma4:e4b";
@@ -10,8 +12,15 @@ function normalize(value) {
 
 function validateInputs({ availableIngredients, mealType, availableCookingTools }) {
   if (!Array.isArray(availableIngredients) || availableIngredients.length === 0 ||
-      availableIngredients.some((ingredient) => typeof ingredient !== "string" || !ingredient.trim())) {
-    throw new TypeError("availableIngredients must be a non-empty list of ingredient names.");
+      availableIngredients.some((item) => !item || typeof item !== "object" || Array.isArray(item) ||
+        typeof item.name !== "string" || !item.name.trim() ||
+        typeof item.quantity !== "number" || !Number.isFinite(item.quantity) || item.quantity <= 0 ||
+        typeof item.unit !== "string" || !supportedUnits.includes(normalize(item.unit)))) {
+    throw new TypeError("availableIngredients must contain a name, positive quantity, and supported unit (g, ml, or piece).");
+  }
+  const names = availableIngredients.map((item) => normalize(item.name));
+  if (new Set(names).size !== names.length) {
+    throw new TypeError("availableIngredients must not contain duplicate ingredient names.");
   }
   if (typeof mealType !== "string" || !mealType.trim()) {
     throw new TypeError("mealType must be a non-empty string.");
@@ -23,13 +32,13 @@ function validateInputs({ availableIngredients, mealType, availableCookingTools 
 }
 
 function nutritionChoices(availableIngredients) {
-  return availableIngredients.map((ingredient) => {
-    const searchName = normalize(ingredient);
+  return availableIngredients.map(({ name, quantity, unit }) => {
+    const searchName = normalize(name);
     const choices = nutritionData.foods
       .filter((food) => [food.id, food.name, ...food.aliases].some((name) => normalize(name) === searchName))
       .map(({ name, state }) => ({ name, state }));
 
-    return { ingredient, nutritionEntries: choices };
+    return { name, availableQuantity: quantity, unit: normalize(unit), nutritionEntries: choices };
   });
 }
 
@@ -44,9 +53,11 @@ function buildPrompt({ availableIngredients, mealType, availableCookingTools }) 
     "Create one practical recipe for the requested meal type.",
     "Return only one valid JSON object. Do not use markdown or add text outside the JSON.",
     "Use exactly these keys: recipeName, ingredients, cookingSteps.",
-    "Each ingredients item must have exactly these keys: ingredient, weightGrams, state.",
-    "ingredient must match one available ingredient name exactly; do not add ingredients, pantry staples, or seasonings that are not listed.",
-    "weightGrams must be a positive number for the amount weighed before cooking (dry/raw amount when applicable).",
+    "Each ingredients item must have exactly these keys: name, quantity, unit, state.",
+    "name must match one available ingredient name exactly; do not add ingredients, pantry staples, or seasonings that are not listed.",
+    "You may use less than or all of an ingredient's availableQuantity, but never more.",
+    "quantity must be the exact positive amount used, in the same unit as the user's available amount, and must not exceed availableQuantity.",
+    "Preserve the user's unit for each ingredient. Supported units are g, ml, and piece. Do not convert units.",
     "state must exactly match one of the nutritionEntries states shown for that ingredient. If a general ingredient name has multiple states and no state was specified by the user, choose its raw/uncooked state.",
     "Use only the listed cooking tools. Do not claim an ingredient or tool is available when it is not listed.",
     "cookingSteps must be a non-empty array of objects with exactly: instruction, ingredientsUsed, toolsUsed.",
@@ -85,26 +96,36 @@ function parseAndValidateRecipe(responseText, input) {
     throw new Error("cookingSteps must be a non-empty array of step objects.");
   }
 
-  const available = new Set(input.availableIngredients.map(normalize));
+  const available = new Map(input.availableIngredients.map((item) => [normalize(item.name), item]));
   const availableTools = new Set(input.availableCookingTools.map(normalize));
   recipe.ingredients.forEach((item, index) => {
     if (!item || typeof item !== "object" || Array.isArray(item) ||
-        Object.keys(item).some((key) => !["ingredient", "weightGrams", "state"].includes(key)) ||
-        !["ingredient", "weightGrams", "state"].every((key) => key in item)) {
-      throw new Error(`ingredients[${index}] must contain only ingredient, weightGrams, and state.`);
+        Object.keys(item).some((key) => !["name", "quantity", "unit", "state"].includes(key)) ||
+        !["name", "quantity", "unit", "state"].every((key) => key in item)) {
+      throw new Error(`ingredients[${index}] must contain only name, quantity, unit, and state.`);
     }
-    if (typeof item.ingredient !== "string" || !available.has(normalize(item.ingredient))) {
+    const availableItem = typeof item.name === "string" ? available.get(normalize(item.name)) : null;
+    if (!availableItem) {
       throw new Error(`ingredients[${index}] uses an ingredient that was not provided.`);
     }
-    if (typeof item.weightGrams !== "number" || !Number.isFinite(item.weightGrams) || item.weightGrams <= 0) {
-      throw new Error(`ingredients[${index}].weightGrams must be a positive number.`);
+    if (typeof item.quantity !== "number" || !Number.isFinite(item.quantity) || item.quantity <= 0) {
+      throw new Error(`ingredients[${index}].quantity must be a positive number.`);
+    }
+    if (typeof item.unit !== "string" || !supportedUnits.includes(normalize(item.unit))) {
+      throw new Error(`ingredients[${index}].unit must be one of ${supportedUnits.join(", ")}.`);
+    }
+    if (normalize(item.unit) !== normalize(availableItem.unit)) {
+      throw new Error(`ingredients[${index}].unit must match the available unit ${availableItem.unit} for ${availableItem.name}.`);
+    }
+    if (item.quantity > availableItem.quantity) {
+      throw new Error(`ingredients[${index}].quantity exceeds the available ${availableItem.quantity} ${availableItem.unit} of ${availableItem.name}.`);
     }
     if (typeof item.state !== "string" || !item.state.trim()) {
       throw new Error(`ingredients[${index}].state must be a non-empty string.`);
     }
   });
 
-  const recipeIngredients = new Set(recipe.ingredients.map((item) => normalize(item.ingredient)));
+  const recipeIngredients = new Set(recipe.ingredients.map((item) => normalize(item.name)));
   const hiddenResources = ["oil", "water", "salt", "pepper", "spice", "spices", "masala", "sauce", "butter", "ghee", "garlic", "ginger", "chilli", "chili"];
   recipe.cookingSteps.forEach((step, index) => {
     if (!step || typeof step !== "object" || Array.isArray(step) ||
@@ -134,10 +155,10 @@ function parseAndValidateRecipe(responseText, input) {
     if (/\b(sauté|saute|sautéed|sauteed|fry|frying|fried)\b/i.test(instruction) && !available.has("oil") && !available.has("ghee") && !available.has("butter")) {
       throw new Error(`cookingSteps[${index}] implies cooking fat, which is not available.`);
     }
-    const mentionedIngredient = input.availableIngredients.find((name) =>
-      new RegExp(`\\b${name.replace(/[.*+?^${}()|[\\]\\\\]/g, "\\\\$&")}\\b`, "i").test(instruction));
-    if (mentionedIngredient && !step.ingredientsUsed.some((name) => normalize(name) === normalize(mentionedIngredient))) {
-      throw new Error(`cookingSteps[${index}] must declare mentioned ingredient "${mentionedIngredient}" in ingredientsUsed.`);
+    const mentionedIngredient = input.availableIngredients.find((item) =>
+      new RegExp(`\\b${item.name.replace(/[.*+?^${}()|[\\]\\\\]/g, "\\\\$&")}\\b`, "i").test(instruction));
+    if (mentionedIngredient && !step.ingredientsUsed.some((name) => normalize(name) === normalize(mentionedIngredient.name))) {
+      throw new Error(`cookingSteps[${index}] must declare mentioned ingredient "${mentionedIngredient.name}" in ingredientsUsed.`);
     }
     const mentionedTool = input.availableCookingTools.find((name) =>
       new RegExp(`\\b${name.replace(/[.*+?^${}()|[\\]\\\\]/g, "\\\\$&")}\\b`, "i").test(instruction));
@@ -147,18 +168,24 @@ function parseAndValidateRecipe(responseText, input) {
   });
 
   const usedIngredients = new Set(recipe.cookingSteps.flatMap((step) => step.ingredientsUsed.map(normalize)));
-  if (recipe.ingredients.some((item) => !usedIngredients.has(normalize(item.ingredient)))) {
+  if (recipe.ingredients.some((item) => !usedIngredients.has(normalize(item.name)))) {
     throw new Error("Every recipe ingredient must be used in at least one cooking step.");
   }
-  const availableNames = new Set(input.availableIngredients.map(normalize));
+  const availableNames = new Set(input.availableIngredients.map((item) => normalize(item.name)));
   if ((availableNames.has("rice") || availableNames.has("raw rice")) &&
-      recipe.ingredients.some((item) => normalize(item.ingredient) === "rice" && normalize(item.state).includes("raw")) &&
+      recipe.ingredients.some((item) => normalize(item.name) === "rice" && normalize(item.state).includes("raw")) &&
       !availableNames.has("water")) {
     throw new Error("Raw rice requires water, which is not in the available ingredients.");
   }
 
   // Ensure the exact ingredient list can be passed to the deterministic calculator.
-  const nutritionCheck = calculateNutrition(recipe.ingredients);
+  let calculatorIngredients;
+  try {
+    calculatorIngredients = convertRecipeIngredientsToGrams(recipe.ingredients);
+  } catch (error) {
+    throw new Error(`Recipe ingredient conversion failed: ${error.message}`);
+  }
+  const nutritionCheck = calculateNutrition(calculatorIngredients);
   if (!nutritionCheck.ok) {
     throw new Error(`Recipe ingredients are not accepted by the nutrition database: ${JSON.stringify(nutritionCheck.errors)}`);
   }
@@ -201,9 +228,13 @@ async function generateRecipe(input) {
 async function runHardcodedRecipeTest() {
   const { generateMeal } = require("./mealFlow");
   const result = await generateMeal({
-    availableIngredients: ["rice", "egg", "onion"],
+    availableIngredients: [
+      { name: "rice", quantity: 200, unit: "g" },
+      { name: "egg", quantity: 3, unit: "piece" },
+      { name: "onion", quantity: 1, unit: "piece" },
+    ],
     mealType: "lunch",
-    availableCookingTools: ["pan", "stove"],
+    availableCookingTools: ["pan", "stove", "knife"],
   });
 
   process.stdout.write(`${JSON.stringify(result, null, 2)}\n`);

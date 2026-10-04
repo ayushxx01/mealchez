@@ -1,0 +1,38 @@
+{
+  "schemaVersion": 1,
+  "supportedUnits": ["g", "ml", "piece"],
+  "foods": [
+    {
+      "names": ["egg", "eggs"],
+      "units": {
+        "piece": {
+          "gramsPerUnit": 50,
+          "basis": "Approximate edible portion per piece; MVP estimate provided in the project requirements."
+        }
+      }
+    },
+    {
+      "names": ["onion", "onions"],
+      "units": {
+        "piece": {
+          "gramsPerUnit": 100,
+          "basis": "Approximate edible portion per piece; MVP estimate provided in the project requirements."
+        }
+      }
+    },
+    {
+      "names": ["milk", "whole milk", "cow milk"],
+      "units": {
+        "ml": {
+          "gramsPerUnit": 1.03,
+          "basis": "Approximate cow milk density; specific gravity value 1.03.",
+          "source": "https://www.foodstandards.gov.au/business/labelling/nutrition-panel-calculator/specific-gravities"
+        }
+      }
+    }
+  ],
+  "notes": [
+    "Gram weights are approximate for piece and milliliter measures; the matching is explicit per food and unit.",
+    "Do not infer a conversion for food/unit pairs missing from foods."
+  ]
+}

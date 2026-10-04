@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Meal Prepper</title>
+    <link rel="stylesheet" href="/styles.css">
+    <script src="/app.js" defer></script>
+  </head>
+  <body>
+    <main>
+      <header>
+        <p class="eyebrow">LOCAL MEAL PLANNER</p>
+        <h1>Meal Prepper</h1>
+        <p>Find a meal using what you have on hand.</p>
+      </header>
+
+      <form id="meal-form">
+        <label for="ingredients">Ingredients and amounts you have</label>
+        <input id="ingredients" name="ingredients" placeholder="egg: 3 piece, rice: 200 g, milk: 500 ml" required>
+        <small>Separate entries with commas. Units: g, ml, or piece.</small>
+
+        <label for="meal-type">Meal type</label>
+        <select id="meal-type" name="mealType" required>
+          <option value="breakfast">Breakfast</option>
+          <option value="lunch" selected>Lunch</option>
+          <option value="snacks">Snacks</option>
+          <option value="dinner">Dinner</option>
+        </select>
+
+        <label for="tools">Available cooking tools</label>
+        <input id="tools" name="tools" placeholder="pan, stove" required>
+        <small>Separate tools with commas.</small>
+
+        <button id="submit-button" type="submit">Generate Meal</button>
+      </form>
+
+      <p id="status" role="status" aria-live="polite"></p>
+      <section id="result" hidden aria-live="polite"></section>
+    </main>
+  </body>
+</html>
