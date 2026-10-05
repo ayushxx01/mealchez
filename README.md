@@ -1,4 +1,4 @@
-# 🍳 Meal Prepper
+# 🍳 Meal Chez
 
 > A local-first AI meal planner built for real-life PG kitchens.
 
