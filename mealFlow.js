@@ -18,4 +18,4 @@ async function generateMeal(input) {
   return attachNutrition(recipe);
 }
 
-module.exports = { attachNutrition, generateMeal };
+module.exports = { generateMeal };

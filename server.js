@@ -1,8 +1,17 @@
+const { loadEnvFile } = require("node:process");
 const http = require("node:http");
 const fs = require("node:fs/promises");
 const path = require("node:path");
+
+try {
+  loadEnvFile(path.join(__dirname, ".env"));
+} catch (error) {
+  if (error.code !== "ENOENT") throw error;
+}
+
 const { generateMeal } = require("./mealFlow");
 
+const HOST = process.env.HOST || "127.0.0.1";
 const PORT = Number(process.env.PORT) || 3000;
 const PUBLIC_DIR = path.join(__dirname, "public");
 const STATIC_FILES = {
@@ -36,9 +45,9 @@ async function readJsonBody(request) {
   }
 }
 
-function createServer(mealGenerator = generateMeal) {
+function createServer() {
   return http.createServer(async (request, response) => {
-    const pathname = new URL(request.url, "http://localhost").pathname;
+    const pathname = new URL(request.url, `http://${HOST}:${PORT}`).pathname;
 
     if (request.method === "GET" && STATIC_FILES[pathname]) {
       const [fileName, contentType] = STATIC_FILES[pathname];
@@ -55,7 +64,7 @@ function createServer(mealGenerator = generateMeal) {
     if (request.method === "POST" && pathname === "/api/generate-meal") {
       try {
         const input = await readJsonBody(request);
-        const result = await mealGenerator(input);
+        const result = await generateMeal(input);
         sendJson(response, 200, result);
       } catch (error) {
         sendJson(response, error.statusCode || 422, {
@@ -70,9 +79,7 @@ function createServer(mealGenerator = generateMeal) {
 }
 
 if (require.main === module) {
-  createServer().listen(PORT, "127.0.0.1", () => {
-    console.log(`Meal Prepper is running at http://127.0.0.1:${PORT}`);
+  createServer().listen(PORT, HOST, () => {
+    console.log(`Meal Prepper is running at http://${HOST}:${PORT}`);
   });
 }
-
-module.exports = { createServer };

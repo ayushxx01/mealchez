@@ -3,8 +3,9 @@ const { calculateNutrition } = require("./nutritionCalculator");
 const { convertRecipeIngredientsToGrams } = require("./unitConverter");
 const { supportedUnits } = require("./unitConversions.json");
 
-const OLLAMA_GENERATE_URL = "http://127.0.0.1:11434/api/generate";
-const MODEL = "gemma4:e4b";
+const OLLAMA_BASE_URL = process.env.OLLAMA_BASE_URL || "http://127.0.0.1:11434";
+const OLLAMA_GENERATE_URL = `${OLLAMA_BASE_URL.replace(/\/+$/, "")}/api/generate`;
+const MODEL = process.env.OLLAMA_MODEL || "gemma4:e4b";
 
 function normalize(value) {
   return value.trim().toLowerCase().replace(/\s+/g, " ");
@@ -60,10 +61,13 @@ function buildPrompt({ availableIngredients, mealType, availableCookingTools }) 
     "Preserve the user's unit for each ingredient. Supported units are g, ml, and piece. Do not convert units.",
     "state must exactly match one of the nutritionEntries states shown for that ingredient. If a general ingredient name has multiple states and no state was specified by the user, choose its raw/uncooked state.",
     "Use only the listed cooking tools. Do not claim an ingredient or tool is available when it is not listed.",
-    "cookingSteps must be a non-empty array of objects with exactly: instruction, ingredientsUsed, toolsUsed.",
-    "For each step, ingredientsUsed and toolsUsed must list every ingredient/tool needed by that step and must be subsets of the supplied lists. Do not assume oil, water, salt, spices, sauces, or other pantry items unless explicitly supplied.",
-    "Do not use dry rice, dry dal, or dry chickpeas unless water is available; omit any ingredient you cannot feasibly prepare with the listed ingredients and tools.",
-    "Do not calculate or include calories, protein, carbohydrates, fat, or any other nutrition totals.",
+"cookingSteps must be a non-empty array of objects with exactly: instruction, ingredientsUsed, toolsUsed.",
+"For each step, ingredientsUsed and toolsUsed must list every ingredient/tool needed by that step and must be subsets of the supplied lists.",
+"IMPORTANT: Every ingredient explicitly mentioned in a step's instruction MUST also appear in that step's ingredientsUsed array.",
+"For example, if the instruction says 'Chop the onion and add it to the pan', ingredientsUsed MUST include 'onion'. Do not mention an ingredient in the instruction unless it is also declared in ingredientsUsed.",
+"Before returning the JSON, verify that every ingredient and tool mentioned in each instruction is present in the corresponding ingredientsUsed or toolsUsed array.",
+"Do not assume oil, water, salt, spices, sauces, or other pantry items unless explicitly supplied.",
+"Do not use dry rice, dry dal, or dry chickpeas unless water is available; omit any ingredient you cannot feasibly prepare with the listed ingredients and tools.",
     "Input:",
     JSON.stringify(context, null, 2),
   ].join("\n");
@@ -195,7 +199,6 @@ function parseAndValidateRecipe(responseText, input) {
 
 async function generateRecipe(input) {
   validateInputs(input);
-
   let response;
   try {
     response = await fetch(OLLAMA_GENERATE_URL, {
@@ -225,26 +228,4 @@ async function generateRecipe(input) {
   return parseAndValidateRecipe(result.response, input);
 }
 
-async function runHardcodedRecipeTest() {
-  const { generateMeal } = require("./mealFlow");
-  const result = await generateMeal({
-    availableIngredients: [
-      { name: "rice", quantity: 200, unit: "g" },
-      { name: "egg", quantity: 3, unit: "piece" },
-      { name: "onion", quantity: 1, unit: "piece" },
-    ],
-    mealType: "lunch",
-    availableCookingTools: ["pan", "stove", "knife"],
-  });
-
-  process.stdout.write(`${JSON.stringify(result, null, 2)}\n`);
-}
-
-module.exports = { generateRecipe, parseAndValidateRecipe };
-
-if (require.main === module) {
-  runHardcodedRecipeTest().catch((error) => {
-    console.error(error.message);
-    process.exitCode = 1;
-  });
-}
+module.exports = { generateRecipe };

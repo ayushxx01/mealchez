@@ -211,21 +211,21 @@ The nutrition calculator is deterministic and does not rely on Gemma for nutriti
 
 ```text
 .
+├── .env.example
+├── .gitignore
 ├── nutrition.json
 ├── nutritionCalculator.js
+├── unitConverter.js
+├── unitConversions.json
 ├── recipeGenerator.js
 ├── mealFlow.js
 ├── server.js
-├── unitConversions.json
 ├── public/
 │   ├── index.html
 │   ├── app.js
 │   └── styles.css
-├── test/
-│   ├── nutritionCalculator.test.js
-│   ├── recipeGenerator.test.js
-│   └── mealFlow.test.js
 ├── package.json
+├── package-lock.json
 └── README.md
 ```
 
@@ -233,66 +233,58 @@ The nutrition calculator is deterministic and does not rely on Gemma for nutriti
 
 ## 🚀 Running Locally
 
-### Prerequisites
-
-Install:
-
-- Node.js
-- Ollama
-- The required Gemma model
-
-Check Node:
+### 1. Clone the repository
 
 ```bash
-node -v
+git clone https://github.com/ayushxx01/mealchez.git
+cd mealchez
 ```
 
-Check Ollama:
+### 2. Install dependencies
 
 ```bash
-ollama list
+npm install
 ```
 
-Make sure the required Gemma model is available locally.
+Meal Prepper currently has no npm runtime dependencies. Use Node.js 20.12 or newer (the server uses Node's built-in `.env` loader).
 
-### Start the application
+### 3. Configure Meal Prepper
 
-From the project directory:
+Create your local environment file from the safe example:
 
 ```bash
-node server.js
+cp .env.example .env
 ```
 
-The application runs at:
+The defaults run the app on `127.0.0.1:3000`, connect to Ollama at `127.0.0.1:11434`, and use `gemma4:e4b`. Edit `.env` if your local setup uses different values. `.env` is ignored by Git; do not commit secrets.
 
-```text
-http://127.0.0.1:3000
-```
+### 4. Install and start Ollama
 
-Open that address in your browser.
-
----
-
-## 🧪 Running Tests
-
-Run the complete test suite:
+Install Ollama for your operating system from [ollama.com/download](https://ollama.com/download). It must be running locally when Meal Prepper generates recipes. Ollama usually starts as a background service after installation. If it is not already running, start it in a separate terminal:
 
 ```bash
-npm test
+ollama serve
 ```
 
-The tests cover:
+### 5. Pull the required Gemma model
 
-- Nutrition calculations
-- Ingredient lookup
-- Ambiguous ingredients
-- Invalid quantities
-- Unknown ingredients
-- Recipe generation
-- Recipe validation
-- Unit conversion
-- Recipe-to-nutrition integration
-- API behavior
+In another terminal, pull the exact model tag configured by Meal Prepper:
+
+```bash
+ollama pull gemma4:e4b
+```
+
+If you change `OLLAMA_MODEL` in `.env`, pull that model tag instead.
+
+### 6. Start Meal Prepper
+
+```bash
+npm start
+```
+
+### 7. Open the app
+
+Open the address from your `.env` values in your browser (default: [http://127.0.0.1:3000](http://127.0.0.1:3000)). Keep Ollama running while generating meals.
 
 ---
 

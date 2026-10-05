@@ -196,6 +196,253 @@
         "fat_g": 39.63
       },
       "source": { "foodCode": "H012", "energy_kj_per100g": 2176 }
+    },
+    {
+      "id": "black-gram-dal-dry",
+      "name": "Black gram, dal",
+      "aliases": ["urad dal", "black gram dal", "split urad dal"],
+      "state": "dry, uncooked dal",
+      "per100g": {
+        "calories_kcal": 324.1,
+        "protein_g": 23.06,
+        "carbohydrates_g": 51,
+        "fat_g": 1.69
+      },
+      "source": { "foodCode": "B003", "energy_kj_per100g": 1356 }
+    },
+    {
+      "id": "black-gram-whole-dry",
+      "name": "Black gram, whole",
+      "aliases": ["whole urad", "whole urad dal", "sabut urad"],
+      "state": "dry, uncooked whole gram",
+      "per100g": {
+        "calories_kcal": 291.3,
+        "protein_g": 21.97,
+        "carbohydrates_g": 43.99,
+        "fat_g": 1.58
+      },
+      "source": { "foodCode": "B004", "energy_kj_per100g": 1219 }
+    },
+    {
+      "id": "green-gram-dal-dry",
+      "name": "Green gram, dal",
+      "aliases": ["moong dal", "mung dal", "split mung beans"],
+      "state": "dry, uncooked dal",
+      "per100g": {
+        "calories_kcal": 325.8,
+        "protein_g": 23.88,
+        "carbohydrates_g": 52.59,
+        "fat_g": 1.35
+      },
+      "source": { "foodCode": "B010", "energy_kj_per100g": 1363 }
+    },
+    {
+      "id": "rajmah-black-dry",
+      "name": "Rajmah, black",
+      "aliases": ["black rajma", "black kidney beans"],
+      "state": "dry, uncooked",
+      "per100g": {
+        "calories_kcal": 298,
+        "protein_g": 19.01,
+        "carbohydrates_g": 49.59,
+        "fat_g": 1.62
+      },
+      "source": { "foodCode": "B018", "energy_kj_per100g": 1247 }
+    },
+    {
+      "id": "rajmah-brown-dry",
+      "name": "Rajmah, brown",
+      "aliases": ["brown rajma", "brown kidney beans"],
+      "state": "dry, uncooked",
+      "per100g": {
+        "calories_kcal": 297.6,
+        "protein_g": 19.5,
+        "carbohydrates_g": 48.83,
+        "fat_g": 1.68
+      },
+      "source": { "foodCode": "B019", "energy_kj_per100g": 1245 }
+    },
+    {
+      "id": "rajmah-red-dry",
+      "name": "Rajmah, red",
+      "aliases": ["rajma", "rajmah", "red rajma", "red kidney beans"],
+      "state": "dry, uncooked",
+      "per100g": {
+        "calories_kcal": 299.2,
+        "protein_g": 19.91,
+        "carbohydrates_g": 48.61,
+        "fat_g": 1.77
+      },
+      "source": { "foodCode": "B020", "energy_kj_per100g": 1252 }
+    },
+    {
+      "id": "red-gram-dal-dry",
+      "name": "Red gram, dal",
+      "aliases": ["toor dal", "arhar dal", "pigeon pea dal"],
+      "state": "dry, uncooked dal",
+      "per100g": {
+        "calories_kcal": 330.8,
+        "protein_g": 21.7,
+        "carbohydrates_g": 55.23,
+        "fat_g": 1.56
+      },
+      "source": { "foodCode": "B021", "energy_kj_per100g": 1384 }
+    },
+    {
+      "id": "cabbage-green-raw",
+      "name": "Cabbage, green",
+      "aliases": ["cabbage", "green cabbage"],
+      "state": "raw",
+      "per100g": {
+        "calories_kcal": 21.5,
+        "protein_g": 1.36,
+        "carbohydrates_g": 3.25,
+        "fat_g": 0.12
+      },
+      "source": { "foodCode": "C015", "energy_kj_per100g": 90 }
+    },
+    {
+      "id": "spinach-raw",
+      "name": "Spinach",
+      "aliases": ["palak", "spinach leaves"],
+      "state": "raw",
+      "per100g": {
+        "calories_kcal": 24.4,
+        "protein_g": 2.14,
+        "carbohydrates_g": 2.05,
+        "fat_g": 0.64
+      },
+      "source": { "foodCode": "C033", "energy_kj_per100g": 102 }
+    },
+    {
+      "id": "capsicum-green-raw",
+      "name": "Capsicum, green",
+      "aliases": ["green capsicum", "green bell pepper", "green shimla mirch"],
+      "state": "raw",
+      "per100g": {
+        "calories_kcal": 16.3,
+        "protein_g": 1.11,
+        "carbohydrates_g": 1.84,
+        "fat_g": 0.34
+      },
+      "source": { "foodCode": "D033", "energy_kj_per100g": 68 }
+    },
+    {
+      "id": "carrot-red-raw",
+      "name": "Carrot, red",
+      "aliases": ["carrot", "carrots", "red carrot", "gajar"],
+      "state": "raw",
+      "per100g": {
+        "calories_kcal": 38.2,
+        "protein_g": 1.04,
+        "carbohydrates_g": 6.71,
+        "fat_g": 0.47
+      },
+      "source": { "foodCode": "F003", "energy_kj_per100g": 160 }
+    },
+    {
+      "id": "cauliflower-raw",
+      "name": "Cauliflower",
+      "aliases": ["cauliflower florets", "phool gobi"],
+      "state": "raw",
+      "per100g": {
+        "calories_kcal": 22.9,
+        "protein_g": 2.15,
+        "carbohydrates_g": 2.03,
+        "fat_g": 0.44
+      },
+      "source": { "foodCode": "D036", "energy_kj_per100g": 96 }
+    },
+    {
+      "id": "cucumber-green-elongate-raw",
+      "name": "Cucumber, green, elongate",
+      "aliases": ["cucumber", "cucumbers", "kheera", "long green cucumber"],
+      "state": "raw",
+      "per100g": {
+        "calories_kcal": 19.6,
+        "protein_g": 0.71,
+        "carbohydrates_g": 3.48,
+        "fat_g": 0.16
+      },
+      "source": { "foodCode": "D043", "energy_kj_per100g": 82 }
+    },
+    {
+      "id": "peas-fresh-raw",
+      "name": "Peas, fresh",
+      "aliases": ["green peas", "fresh peas", "matar"],
+      "state": "raw, fresh",
+      "per100g": {
+        "calories_kcal": 81.3,
+        "protein_g": 7.25,
+        "carbohydrates_g": 11.88,
+        "fat_g": 0.13
+      },
+      "source": { "foodCode": "D061", "energy_kj_per100g": 340 }
+    },
+    {
+      "id": "apple-big-raw",
+      "name": "Apple, big",
+      "aliases": ["apple", "apples"],
+      "state": "raw, edible portion",
+      "per100g": {
+        "calories_kcal": 62.4,
+        "protein_g": 0.29,
+        "carbohydrates_g": 13.11,
+        "fat_g": 0.64
+      },
+      "source": { "foodCode": "E001", "energy_kj_per100g": 261 }
+    },
+    {
+      "id": "orange-pulp-raw",
+      "name": "Orange, pulp",
+      "aliases": ["orange", "oranges", "orange pulp"],
+      "state": "raw, edible pulp",
+      "per100g": {
+        "calories_kcal": 37.3,
+        "protein_g": 0.7,
+        "carbohydrates_g": 7.92,
+        "fat_g": 0.13
+      },
+      "source": { "foodCode": "E047", "energy_kj_per100g": 156 }
+    },
+    {
+      "id": "mango-ripe-banganapalli-raw",
+      "name": "Mango, ripe, banganapalli",
+      "aliases": ["mango", "ripe mango", "banganapalli mango"],
+      "state": "raw, ripe, edible portion",
+      "per100g": {
+        "calories_kcal": 41.8,
+        "protein_g": 0.54,
+        "carbohydrates_g": 8.18,
+        "fat_g": 0.55
+      },
+      "source": { "foodCode": "E036", "energy_kj_per100g": 175 }
+    },
+    {
+      "id": "green-chillies-raw",
+      "name": "Chillies, green - all varieties",
+      "aliases": ["green chilli", "green chillies", "green chili", "green chilies"],
+      "state": "raw",
+      "per100g": {
+        "calories_kcal": 42.3,
+        "protein_g": 2.36,
+        "carbohydrates_g": 5.86,
+        "fat_g": 0.72
+      },
+      "source": { "foodCode": "G008", "energy_kj_per100g": 177 }
+    },
+    {
+      "id": "coriander-leaves-raw",
+      "name": "Coriander leaves",
+      "aliases": ["coriander", "fresh coriander", "cilantro", "dhania", "coriander leaves"],
+      "state": "raw, leaves",
+      "per100g": {
+        "calories_kcal": 31.1,
+        "protein_g": 3.52,
+        "carbohydrates_g": 1.93,
+        "fat_g": 0.7
+      },
+      "source": { "foodCode": "G009", "energy_kj_per100g": 130 }
     }
   ],
   "notAvailableInSource": [
@@ -214,6 +461,34 @@
     {
       "name": "Bread",
       "reason": "No direct bread entry was found in the IFCT 2017 proximate composition table."
+    },
+    {
+      "name": "Tofu",
+      "reason": "No direct tofu entry was found in the IFCT 2017 proximate composition table."
+    },
+    {
+      "name": "Yogurt",
+      "reason": "No direct yogurt entry was found in the IFCT 2017 proximate composition table."
+    },
+    {
+      "name": "Cooking oil",
+      "reason": "IFCT reports individual oil types rather than a generic cooking oil, so a type-specific value cannot be assigned safely."
+    },
+    {
+      "name": "Butter",
+      "reason": "No direct butter entry was found in the IFCT 2017 proximate composition table."
+    },
+    {
+      "name": "Poha",
+      "reason": "No direct poha or flattened-rice entry was found in the IFCT 2017 proximate composition table."
+    },
+    {
+      "name": "Cheese",
+      "reason": "No direct cheese entry was found in the IFCT 2017 proximate composition table."
+    },
+    {
+      "name": "Peanut butter",
+      "reason": "No direct peanut butter entry was found in the IFCT 2017 proximate composition table."
     }
   ],
   "dataNotes": [

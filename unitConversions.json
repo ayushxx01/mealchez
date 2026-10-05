@@ -21,6 +21,69 @@
       }
     },
     {
+      "names": ["banana", "bananas", "kela"],
+      "units": {
+        "piece": {
+          "gramsPerUnit": 100,
+          "basis": "MVP approximation: about 100 g edible portion per average banana; actual weight varies by size."
+        }
+      }
+    },
+    {
+      "names": ["potato", "aloo"],
+      "units": {
+        "piece": {
+          "gramsPerUnit": 150,
+          "basis": "MVP approximation: about 150 g edible portion per medium potato; actual weight varies by size."
+        }
+      }
+    },
+    {
+      "names": ["tomato", "tomatoes", "tamatar"],
+      "units": {
+        "piece": {
+          "gramsPerUnit": 100,
+          "basis": "MVP approximation: about 100 g edible portion per medium tomato; actual weight varies by size."
+        }
+      }
+    },
+    {
+      "names": ["carrot", "carrots", "red carrot", "gajar"],
+      "units": {
+        "piece": {
+          "gramsPerUnit": 60,
+          "basis": "MVP approximation: about 60 g edible portion per medium carrot; actual weight varies by size."
+        }
+      }
+    },
+    {
+      "names": ["apple", "apples"],
+      "units": {
+        "piece": {
+          "gramsPerUnit": 150,
+          "basis": "MVP approximation: about 150 g edible portion per medium apple; actual weight varies by size."
+        }
+      }
+    },
+    {
+      "names": ["orange", "oranges", "orange pulp"],
+      "units": {
+        "piece": {
+          "gramsPerUnit": 130,
+          "basis": "MVP approximation: about 130 g edible pulp per medium orange; actual weight varies by size."
+        }
+      }
+    },
+    {
+      "names": ["capsicum, green", "green capsicum", "green bell pepper", "green shimla mirch"],
+      "units": {
+        "piece": {
+          "gramsPerUnit": 120,
+          "basis": "MVP approximation: about 120 g edible portion per medium green capsicum; actual weight varies by size."
+        }
+      }
+    },
+    {
       "names": ["milk", "whole milk", "cow milk"],
       "units": {
         "ml": {
